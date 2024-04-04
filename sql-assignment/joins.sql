@@ -46,13 +46,14 @@ GROUP BY
 HAVING
     SUM(F.share) < O.shares;
 -- Sanjana 
--- 'admin','1','WLY','1','-10','100','110'
--- 'admin','6','GS','5','-10','100','110'
--- 'alice','4','A','3','-10','10','20'
--- 'alice','11','SPY','11','-75','100','175'
--- 'james','15','TLT','13','-10','10','20'
--- 'robert','8','AAPL','7','-10','25','35'
--- 'robert','8','AAPL','9','-15','25','40'
+# username, orderid, symbol, fillid, filled_shares, total_shares, outstanding_shares_left
+-- 'admin', '1', 'WLY', '1', '-10', '100', '110'
+-- 'admin', '6', 'GS', '5', '-10', '100', '110'
+-- 'alice', '4', 'A', '3', '-10', '10', '20'
+-- 'alice', '11', 'SPY', '11', '-75', '100', '175'
+-- 'james', '15', 'TLT', '13', '-10', '10', '20'
+-- 'robert', '8', 'AAPL', '7', '-10', '25', '35'
+-- 'robert', '8', 'AAPL', '9', '-15', '25', '40'
 
 
 
@@ -101,9 +102,10 @@ WHERE
 ORDER BY 
     O.symbol, U.uname;
 
--- 'WLY','admin','admin','-10'
--- 'WLY','james','user','0'
--- 'WLY','robert','user','10'
+# symbol, username, role, filled_shares
+ -- 'WLY', 'admin', 'admin', '-10'
+-- 'WLY', 'james', 'user', '0'
+-- 'WLY', 'robert', 'user', '10'
 
 -- Sanjana 
 
