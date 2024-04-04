@@ -27,7 +27,6 @@ Tatiana
 
 -- #4: Display all partial_fill orders and how many outstanding shares are left.
 -- Also include the username, symbol, and orderid.
--- Sanjana
 SELECT 
     U.uname AS username,
     O.orderid,
@@ -44,8 +43,19 @@ INNER JOIN
     `User` U ON O.userid = U.userid
 GROUP BY 
     O.orderid, F.fillid
-HAVING 
+HAVING
     SUM(F.share) < O.shares;
+-- Sanjana 
+-- 'admin','1','WLY','1','-10','100','110'
+-- 'admin','6','GS','5','-10','100','110'
+-- 'alice','4','A','3','-10','10','20'
+-- 'alice','11','SPY','11','-75','100','175'
+-- 'james','15','TLT','13','-10','10','20'
+-- 'robert','8','AAPL','7','-10','25','35'
+-- 'robert','8','AAPL','9','-15','25','40'
+
+
+
 
 
 -- #5: Display the orderid, symbol, status, order shares, filled shares, and price for orders with fills.
@@ -64,8 +74,6 @@ Tatiana
 
 -- #8: Display the symbol, username, role, and number of filled shares where the order symbol is WLY.
 -- Include all orders, even if the order has no fills.
---Sanjana
-
 SELECT 
     O.symbol,
     U.uname AS username,
@@ -92,5 +100,10 @@ WHERE
     O.symbol = 'WLY'
 ORDER BY 
     O.symbol, U.uname;
+
+-- 'WLY','admin','admin','-10'
+-- 'WLY','james','user','0'
+-- 'WLY','robert','user','10'
+
 
 
