@@ -22,8 +22,13 @@ Tantiana
 
 
 -- #4: List the different role names a user can have.
-Sanjana
-
+--Sanjana
+SELECT DISTINCT R.name AS role_name
+FROM UserRoles UR
+JOIN Role R ON UR.roleid = R.roleid;
+-- # role_name
+-- 'admin'
+-- 'user'
 
 -- #5: List all the orders.
 David
@@ -38,7 +43,26 @@ Tatiana
 
 
 -- #8: List all pending and partial fill orders with oldest orders first.
-Sanjana
+-- Sanjana
+-- Sanjana
+SELECT 
+    F.fillid,
+    F.orderid,
+    F.userid,
+    F.share,
+    F.price,
+    F.symbol
+FROM 
+    Fill F
+JOIN 
+    `Order` O ON F.orderid = O.orderid
+WHERE 
+    O.status IN ('pending', 'partial_fill')
+ORDER BY 
+    O.orderTime;
+-- fillid, orderid, userid, share, price, symbol
+-- '11', '11', '5', '-75', '365.73', 'SPY'
+-- '1', '1', '1', '-10', '38.73', 'WLY'
 
 
 -- #9: List the 10 most expensive financial products where the productType is stock.
