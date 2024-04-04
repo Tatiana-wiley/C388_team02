@@ -28,6 +28,24 @@ Tatiana
 -- #4: Display all partial_fill orders and how many outstanding shares are left.
 -- Also include the username, symbol, and orderid.
 Sanjana
+SELECT 
+    U.uname AS username,
+    O.orderid,
+    O.symbol,
+    F.fillid,
+    F.share AS filled_shares,
+    O.shares AS total_shares,
+    (O.shares - SUM(F.share)) AS outstanding_shares_left
+FROM 
+    `Order` O
+INNER JOIN 
+    `Fill` F ON O.orderid = F.orderid
+INNER JOIN 
+    `User` U ON O.userid = U.userid
+GROUP BY 
+    O.orderid, F.fillid
+HAVING 
+    SUM(F.share) < O.shares;
 
 
 -- #5: Display the orderid, symbol, status, order shares, filled shares, and price for orders with fills.
@@ -48,6 +66,31 @@ Tatiana
 -- Include all orders, even if the order has no fills.
 Sanjana
 
-
+SELECT 
+    O.symbol,
+    U.uname AS username,
+    R.name AS role,
+    COALESCE(F.total_filled_shares, 0) AS filled_shares
+FROM 
+    `Order` O
+JOIN 
+    `User` U ON O.userid = U.userid
+JOIN 
+    `UserRoles` UR ON U.userid = UR.userid
+JOIN 
+    `Role` R ON UR.roleid = R.roleid
+LEFT JOIN (
+    SELECT 
+        orderid,
+        SUM(share) AS total_filled_shares
+    FROM 
+        `Fill`
+    GROUP BY 
+        orderid
+) F ON O.orderid = F.orderid
+WHERE 
+    O.symbol = 'WLY'
+ORDER BY 
+    O.symbol, U.uname;
 
 
