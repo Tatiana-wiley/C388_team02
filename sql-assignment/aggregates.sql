@@ -1,5 +1,4 @@
-
--- Sanjana C388
+-- Sanjana Achar c388
 
 /*
 Aggregate Queries
@@ -11,10 +10,10 @@ REQUIREMENT - Use a multi-line comment to paste the first 5 or fewer results und
 USE orderbook_activity_db;
 
 -- #1: How many users do we have?
--- Sanjana 
 SELECT COUNT(userid) AS num_users
 FROM User;
--- Returned Rows : 7
+-- Returned Rows: 7
+
 
 -- #2: List the username, userid, and number of orders each user has placed.
 David
@@ -33,20 +32,19 @@ Tatiana
 -- #5: List the username and the average absolute net order amount for each user with an order.
 -- Round the result to the nearest hundredth and use an alias (averageTradePrice).
 -- Sort the results by averageTradePrice with the largest value at the top.
--- Sanjana
 SELECT u.uname AS username,
        ROUND(AVG(ABS(o.shares * o.price)), 2) AS averageTradePrice
 FROM `Order` o
 JOIN `User` u ON o.userid = u.userid
 GROUP BY u.userid, u.uname
 ORDER BY averageTradePrice DESC;
-Returned Rows : 7
-# username, averageTradePrice
--- 'robert', '10417.84'
--- 'kendra', '17109.53'
--- 'james', '2053.73'
--- 'alice', '6280.26'
+-- # username, averageTradePrice
 -- 'admin', '12182.47'
+-- 'alice', '6280.26'
+-- 'james', '2053.73'
+-- 'kendra', '17109.53'
+-- 'robert', '10417.84'
+-- Results: 7
 
 
 -- #6: How many shares for each symbol does each user have?
@@ -82,12 +80,14 @@ GROUP BY
     u.userid, u.uname
 ORDER BY 
     net_outstanding DESC
+LIMIT 5;
+-- Results: 8
 
--- Returned Rows : 8
--- Sanjana
--- 'admin','5555.00','36547.40','30992.40'
--- 'alice','29717.95','38861.20','9143.25'
--- 'robert','3906.30','7425.30','3519.00'
--- 'james','2288.20','2288.20','0.00'
--- 'kendra','31893.65','31893.65','0.00'
 
+# username, absolute_filled_amount, absolute_ordered_amount, net_outstanding
+-- 'admin', '5555.00', '36547.40', '30992.40'
+-- 'alice', '29717.95', '38861.20', '9143.25'
+-- 'robert', '3906.30', '7425.30', '3519.00'
+-- 'james', '2288.20', '2288.20', '0.00'
+-- 'kendra', '31893.65', '31893.65', '0.00'
+-- Results: 8
