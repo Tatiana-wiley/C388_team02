@@ -41,6 +41,14 @@ JOIN `User` u ON o.userid = u.userid
 GROUP BY u.userid, u.uname
 ORDER BY averageTradePrice DESC;
 Returned Rows : 7
+# username, averageTradePrice
+-- 'robert', '10417.84'
+-- 'kendra', '17109.53'
+-- 'james', '2053.73'
+-- 'alice', '6280.26'
+-- 'admin', '12182.47'
+
+
 -- #6: How many shares for each symbol does each user have?
 -- Display the username and symbol with number of shares.
 David
@@ -77,4 +85,9 @@ ORDER BY
 
 -- Returned Rows : 8
 -- Sanjana
+-- 'admin','5555.00','36547.40','30992.40'
+-- 'alice','29717.95','38861.20','9143.25'
+-- 'robert','3906.30','7425.30','3519.00'
+-- 'james','2288.20','2288.20','0.00'
+-- 'kendra','31893.65','31893.65','0.00'
 
