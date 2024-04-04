@@ -27,7 +27,7 @@ Tatiana
 
 -- #4: Display all partial_fill orders and how many outstanding shares are left.
 -- Also include the username, symbol, and orderid.
-Sanjana
+-- Sanjana
 SELECT 
     U.uname AS username,
     O.orderid,
@@ -64,7 +64,7 @@ Tatiana
 
 -- #8: Display the symbol, username, role, and number of filled shares where the order symbol is WLY.
 -- Include all orders, even if the order has no fills.
-Sanjana
+--Sanjana
 
 SELECT 
     O.symbol,
