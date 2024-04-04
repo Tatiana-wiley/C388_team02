@@ -1,4 +1,4 @@
--- Your name and cohort here
+-- Morphy Yeboah c388
 
 /*
 Join Queries
@@ -13,10 +13,24 @@ USE orderbook_activity_db;
 David
 
 
+-- Morphy
 -- #2: Display each absolute order net (share*price), status, symbol, trade date, and username.
 -- Sort the results with largest the absolute order net (share*price) at the top.
 -- Include only orders that were not canceled or partially canceled.
-Morphy
+select o.`status`, o.symbol, o.orderTime, u.uname, sum(shares * price) as net_abs
+from `Order` as o
+join `User` as u on o.userid = u.userid
+where o.`status` not like 'canceled%'
+Group by o.`status`, o.symbol, o.orderTime, u.uname
+Order by net_abs desc;
+/*
+	partial_fill	SPY	2023-03-15 19:24:21	alice	36573.00
+	partial_fill	WLY	2023-03-15 19:20:35	admin	3873.00
+	pending	WLY	2023-03-15 19:51:06	james	3873.00
+	filled	AAPL	2023-03-15 19:23:22	robert	3519.00
+	filled	A	2023-03-15 19:21:31	alice	1298.90
+	filled	TLT	2023-03-15 19:25:29	james	989.30
+*/
 
 
 
@@ -37,7 +51,19 @@ David
 
 
 -- #6: Display the username and user role for users who have not placed an order.
-Morphy
+
+
+select u.uname,  ro.`name` -- ord.`status`
+from `User` as u
+left join `Order` as ord on u.userid = ord.userid
+join UserRoles as uro on u.userid = uro.userid
+join `Role` as ro on uro.roleid = ro.roleid
+where ord.`status` is null;
+
+/*
+sam	user
+wiley	admin
+*/
 
 
 -- #7: Display orderid, username, role, symbol, price, and number of shares for orders with no fills.
