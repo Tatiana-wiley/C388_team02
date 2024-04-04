@@ -74,7 +74,7 @@ GROUP BY
     u.userid, u.uname
 ORDER BY 
     net_outstanding DESC
-LIMIT 5;
+
 -- Returned Rows : 8
-Sanjana
+-- Sanjana
 
