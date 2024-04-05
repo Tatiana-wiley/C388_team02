@@ -56,38 +56,6 @@ Where dateJoined BETWEEN '2023-03-01' AND '2023-03-31';
 
 
 -- #4: List the different role names a user can have.
--- Sanjana
-SELECT `User`.uname, `User`.dateJoined FROM `User`;
-/*
-admin	2023-02-14 13:13:28
-wiley	2023-04-01 13:13:28
-james	2023-03-15 19:15:48
-kendra	2023-03-15 19:16:06
-alice	2023-03-15 19:16:21
-ROWS=7
-*/
-
-
--- #2: List the username and datejoined from users with the newest users at the top.
--- Morphy
-
-
--- #3: List all usernames and dateJoined for users who joined in March 2023.
--- Tatiana
-USE orderbook_activity_db;
-SELECT uname, dateJoined
-FROM User
-Where dateJoined BETWEEN '2023-03-01' AND '2023-03-31';
-/*  5 rows
-'james','2023-03-15 19:15:48'
-'kendra','2023-03-15 19:16:06'
-'alice','2023-03-15 19:16:21'
-'robert','2023-03-15 19:16:43'
-'sam','2023-03-15 19:16:59'
-*/
-
-
--- #4: List the different role names a user can have.
 --Sanjana
 SELECT DISTINCT R.name AS role_name
 FROM UserRoles UR
@@ -95,6 +63,7 @@ JOIN Role R ON UR.roleid = R.roleid;
 -- # role_name
 -- 'admin'
 -- 'user'
+-- 2 rows
 
 
 -- #5: List all the orders.
@@ -163,6 +132,7 @@ ORDER BY
 -- fillid, orderid, userid, share, price, symbol
 -- '11', '11', '5', '-75', '365.73', 'SPY'
 -- '1', '1', '1', '-10', '38.73', 'WLY'
+-- 2 rows
 
 
 -- #9: List the 10 most expensive financial products where the productType is stock.
@@ -175,9 +145,9 @@ LIMIT 0, 10;
 /*
 207940.KS	Samsung Biologics Co.,Ltd.	stock	830000.00
 003240.KS	Taekwang Industrial Co., Ltd.	stock	715000.00
-000670.KS	Young Poong Corporation	stock	630000.00
+000670.KS	Young Poong Corporation		stock	630000.00
 010130.KS	Korea Zinc Company, Ltd.	stock	616000.00
-006400.KS	Samsung SDI Co., Ltd.	stock	605000.00
+006400.KS	Samsung SDI Co., Ltd.		stock	605000.00
 ROWS=10
 */
 
