@@ -12,7 +12,6 @@ USE orderbook_activity_db;
 
 -- #1: How many users do we have?
 -- Sanjana
-=======
 SELECT COUNT(userid) AS num_users
 FROM User;
 -- Returned Rows: 7
