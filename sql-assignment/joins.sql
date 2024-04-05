@@ -42,6 +42,7 @@ Order by net_abs desc;
 	pending	NFLX	2023-03-15 19:21:12	robert	24315.00
 	partial_fill	WLY	2023-03-15 19:20:35	admin	3873.00
 	pending	WLY	2023-03-15 19:51:06	james	3873.00
+	Row = 19
 */
 
 
@@ -140,6 +141,7 @@ where ord.`status` is null;
 /*
 sam	user
 wiley	admin
+Row = 2
 */
 
 
