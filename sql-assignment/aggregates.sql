@@ -49,6 +49,7 @@ Order by ord.symbol asc;
 	admin	AAPL	1
 	robert	AAPL	1
 	kendra	AAPL	1
+Row = 19
 */
 
 
@@ -122,6 +123,7 @@ having orders_placed_for_each_symbol >= 3;
 3	WLY
 3	AAPL
 6	A
+Row = 3
 */
 
 
