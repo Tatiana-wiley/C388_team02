@@ -36,6 +36,7 @@ alice	2023-03-15 19:16:21
 kendra	2023-03-15 19:16:06
 james	2023-03-15 19:15:48
 admin	2023-02-14 13:13:28
+Row = 7
 */
 
 -- #3: List all usernames and dateJoined for users who joined in March 2023.
@@ -124,6 +125,7 @@ having net_amnt > 1000;
 	7	3056.30
 	8	3519.00
 	9	1407.60
+	Row = 16
 */
 
 
@@ -198,5 +200,6 @@ order by net_amt desc;
 	7	6	4	GS	3056.30
 	8	9	6	AAPL	2111.40
 	10	10	1	AAPL	2111.40
+	Row = 10
 
     */
