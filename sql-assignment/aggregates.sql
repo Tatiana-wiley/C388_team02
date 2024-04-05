@@ -1,6 +1,6 @@
 
 -- Your name and cohort here
-
+-- C388 Team 02 (Sanjana, Tatiana, David, Morphy)
 /*
 Aggregate Queries
 
@@ -11,21 +11,38 @@ REQUIREMENT - Use a multi-line comment to paste the first 5 or fewer results und
 USE orderbook_activity_db;
 
 -- #1: How many users do we have?
-Sanjana
+-- Sanjana
 
 
 -- #2: List the username, userid, and number of orders each user has placed.
-David
+-- David
 
 
 -- #3: List the username, symbol, and number of orders placed for each user and for each symbol. 
 -- Sort results in alphabetical order by symbol.
-Morphy
+-- Morphy
 
 
 
 -- #4: Perform the same query as the one above, but only include admin users.
-Tatiana
+-- Tatiana
+USE orderbook_activity_db;
+SELECT u.uname, o.symbol, COUNT(o.orderid) AS numberOfOrders
+FROM `Order` o
+JOIN User  u ON u.userid = o.userid
+JOIN UserRoles ur ON ur.userid = u.userid
+WHERE ur.roleid = 1
+GROUP BY u.uname , o.symbol
+ORDER BY o.symbol ASC;
+/* 7 rows
+'alice','A','5'
+'admin','AAPL','1'
+'alice','GOOG','1'
+'admin','GS','1'
+'alice','SPY','1'
+'alice','TLT','1'
+'admin','WLY','1'
+*/
 
 
 -- #5: List the username and the average absolute net order amount for each user with an order.
@@ -46,7 +63,17 @@ Morphy
 -- #8: List all the symbols and absolute net fills that have fills exceeding $100.
 -- Do not include the WLY symbol in the results.
 -- Sort the results by highest net with the largest value at the top.
-Tatiana
+-- Tatiana
+SELECT o.symbol, SUM(ABS(f.share)) AS NETFILL
+FROM `Order` o
+RIGHT OUTER JOIN Fill f ON f.orderid = o.orderid
+WHERE o.symbol != 'WLY' 
+GROUP BY o.symbol
+HAVING SUM(ABS(f.share)) > 100
+ORDER BY NETFILL DESC;
+/* 1 ROW
+'SPY','150'
+*/
 
 
 -- #9: List the top five users with the greatest amount of outstanding orders.
