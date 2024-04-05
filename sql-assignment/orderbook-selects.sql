@@ -42,20 +42,19 @@ admin	2023-02-14 13:13:28
 
 -- Morphy
 -- #6: List all orders in March where the absolute net order amount is greater than 1000.
-select orderid, sum(price * shares) as net_amnt
+select orderid, abs(price * shares) as net_amnt
 from `Order`
 group by orderid
 having net_amnt > 1000;
-
-/*
-1	3873.00
-4	1298.90
-6	30563.00
-8	3519.00
-11	36573.00
-18	23627.00
-19	10082.00
-20	3873.00
+/* Question 6 result
+	1	3873.00
+	3	24315.00
+	4	1298.90
+	5	1298.90
+	6	30563.00
+	7	3056.30
+	8	3519.00
+	9	1407.60
 */
 
 
@@ -76,16 +75,19 @@ David
 -- #10: Display orderid, fillid, userid, symbol, and absolute net fill amount
 -- from fills where the absolute net fill is greater than $1000.
 -- Sort the results with the largest absolute net fill at the top.
-select orderid, fillid, userid, symbol, sum(price * `share`) as net_amt
+select orderid, fillid, userid, symbol, abs(price * `share`) as net_amt
 from Fill
 group by orderid, fillid, userid, symbol
 having net_amt > 1000
 order by net_amt desc;
 
-/*
-14	12	4	SPY	27429.75
-7	6	4	GS	3056.30
-10	10	1	AAPL	2111.40
-9	8	4	AAPL	1407.60
-5	4	3	A	1298.90
-*/
+/* Question 10 result
+	orderid	fillid	userid	symbol	net_amt
+	11	11	5	SPY	27429.75
+	14	12	4	SPY	27429.75
+	6	5	1	GS	3056.30
+	7	6	4	GS	3056.30
+	8	9	6	AAPL	2111.40
+	10	10	1	AAPL	2111.40
+
+    */
