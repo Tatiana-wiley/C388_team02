@@ -14,7 +14,10 @@ USE orderbook_activity_db;
 -- Sanjana
 SELECT COUNT(userid) AS num_users
 FROM User;
--- Returned Rows: 7
+/*
+7
+*/
+-- Returned Rows: 1
 
 
 -- #2: List the username, userid, and number of orders each user has placed.
@@ -165,10 +168,8 @@ GROUP BY
 ORDER BY 
     net_outstanding DESC
 LIMIT 5;
--- Results: 8
 
-
-# username, absolute_filled_amount, absolute_ordered_amount, net_outstanding
+-- username, absolute_filled_amount, absolute_ordered_amount, net_outstanding
 -- 'admin', '5555.00', '36547.40', '30992.40'
 -- 'alice', '29717.95', '38861.20', '9143.25'
 -- 'robert', '3906.30', '7425.30', '3519.00'
