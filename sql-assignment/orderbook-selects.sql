@@ -12,6 +12,15 @@ USE orderbook_activity_db;
 
 -- #1: List all users, including username and dateJoined.
 -- David
+SELECT `User`.uname, `User`.dateJoined FROM `User`;
+/*
+admin	2023-02-14 13:13:28
+wiley	2023-04-01 13:13:28
+james	2023-03-15 19:15:48
+kendra	2023-03-15 19:16:06
+alice	2023-03-15 19:16:21
+ROWS=7
+*/
 
 
 -- #2: List the username and datejoined from users with the newest users at the top.
