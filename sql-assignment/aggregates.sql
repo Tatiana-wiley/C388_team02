@@ -1,6 +1,5 @@
 -- Your name and cohort here
--- David Acuff - C388
-
+-- C388 Team 02 (Sanjana, Tatiana, David, Morphy)
 /*
 Aggregate Queries
 
@@ -37,6 +36,23 @@ ROWS=7
 
 -- #4: Perform the same query as the one above, but only include admin users.
 -- Tatiana
+USE orderbook_activity_db;
+SELECT u.uname, o.symbol, COUNT(o.orderid) AS numberOfOrders
+FROM `Order` o
+JOIN User  u ON u.userid = o.userid
+JOIN UserRoles ur ON ur.userid = u.userid
+WHERE ur.roleid = 1
+GROUP BY u.uname , o.symbol
+ORDER BY o.symbol ASC;
+/* 7 rows
+'alice','A','5'
+'admin','AAPL','1'
+'alice','GOOG','1'
+'admin','GS','1'
+'alice','SPY','1'
+'alice','TLT','1'
+'admin','WLY','1'
+*/
 
 
 -- #5: List the username and the average absolute net order amount for each user with an order.
@@ -70,6 +86,19 @@ ROWS=19
 -- Do not include the WLY symbol in the results.
 -- Sort the results by highest net with the largest value at the top.
 -- Tatiana
+SELECT f.symbol, SUM(ABS(f.share) * f.price) AS NETFILL
+FROM  Fill f
+WHERE f.symbol != 'WLY'
+GROUP BY f.symbol
+HAVING SUM(ABS(f.share) * f.price) > 100
+ORDER BY NETFILL DESC;
+/* 5 ROWS
+'SPY','54859.50'
+'AAPL','7038.00'
+'GS','6112.60'
+'A','2597.80'
+'TLT','1978.60'
+*/
 
 
 -- #9: List the top five users with the greatest amount of outstanding orders.

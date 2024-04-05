@@ -1,5 +1,5 @@
 -- Your name and cohort here
--- David Acuff - C388
+-- C388 Team 02 (Sanjana, Tatiana, David, Morphy)
 
 /*
 Join Queries
@@ -34,6 +34,28 @@ ROWS=3
 -- #3: Display the orderid, symbol, status, order shares, filled shares, and price for orders with fills.
 -- Note that filledShares are the opposite sign (+-) because they subtract from ordershares!
 -- Tatiana
+SELECT o.orderid, o.symbol, o.status, SUM(o.shares),SUM(ABS(f.share)) AS Filled, o.price
+FROM `Order` o
+RIGHT OUTER JOIN Fill f ON f.orderid = o.orderid
+WHERE o.status != 'canceled_partial_fill'
+GROUP BY o.orderid;
+
+/* 12 rows
+'1','WLY','partial_fill','100','10','38.73'
+'2','WLY','filled','-10','10','38.73'
+'4','A','filled','10','10','129.89'
+'5','A','filled','-10','10','129.89'
+'7','GS','filled','-10','10','305.63'
+'8','AAPL','filled','50','25','140.76'
+'9','AAPL','filled','-10','10','140.76'
+'10','AAPL','filled','-15','15','140.76'
+'11','SPY','partial_fill','100','75','365.73'
+'14','SPY','filled','-75','75','365.73'
+'15','TLT','filled','10','10','98.93'
+'16','TLT','filled','-10','10','98.93'
+
+
+*/
 
 
 -- #4: Display all partial_fill orders and how many outstanding shares are left.
@@ -62,6 +84,7 @@ ROWS=6
 */
 
 
+
 -- #6: Display the username and user role for users who have not placed an order.
 -- Morphy
 
@@ -69,6 +92,30 @@ ROWS=6
 -- #7: Display orderid, username, role, symbol, price, and number of shares for orders with no fills.
 -- Tatiana
 
+SELECT o.orderid, u.uname, r.name, o.symbol, o.price, o.shares
+FROM `Order` o
+JOIN User u ON u.userid = o.userid
+JOIN UserRoles ur ON ur.userid = u.userid
+JOIN Role r ON r.roleid = ur.roleid
+WHERE o.status = 'pending' OR o.status ="canceled_partial_fill";
+
+/* 14 rows
+
+'1','admin','admin','WLY','38.73','100'
+'6','admin','admin','GS','305.63','100'
+'11','alice','admin','SPY','365.73','100'
+'19','alice','admin','GOOG','100.82','100'
+'21','alice','admin','A','129.89','-1'
+'22','alice','admin','A','129.89','2'
+'23','alice','admin','A','129.89','5'
+'24','alice','admin','A','129.89','2'
+'20','james','user','WLY','38.73','100'
+'12','kendra','user','QQQ','268.27','-100'
+'13','kendra','user','QQQ','268.27','-100'
+'3','robert','user','NFLX','243.15','-100'
+'17','robert','user','AAA','24.09','10'
+'18','robert','user','MSFT','236.27','100'
+*/
 
 -- #8: Display the symbol, username, role, and number of filled shares where the order symbol is WLY.
 -- Include all orders, even if the order has no fills.
