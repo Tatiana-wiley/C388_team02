@@ -56,7 +56,6 @@ Where dateJoined BETWEEN '2023-03-01' AND '2023-03-31';
 
 -- #4: List the different role names a user can have.
 -- Sanjana
-=======
 SELECT `User`.uname, `User`.dateJoined FROM `User`;
 /*
 admin	2023-02-14 13:13:28
