@@ -17,19 +17,19 @@ David
 -- #2: Display each absolute order net (share*price), status, symbol, trade date, and username.
 -- Sort the results with largest the absolute order net (share*price) at the top.
 -- Include only orders that were not canceled or partially canceled.
-select o.`status`, o.symbol, o.orderTime, u.uname, sum(shares * price) as net_abs
+select o.`status`, o.symbol, o.orderTime, u.uname, abs(sum(shares * price)) as net_abs
 from `Order` as o
 join `User` as u on o.userid = u.userid
 where o.`status` not like 'canceled%'
 Group by o.`status`, o.symbol, o.orderTime, u.uname
 Order by net_abs desc;
-/*
+/* question 2 result
+	pending	QQQ	2023-03-15 19:24:32	kendra	53654.00
 	partial_fill	SPY	2023-03-15 19:24:21	alice	36573.00
+	filled	SPY	2023-03-15 19:24:47	kendra	27429.75
+	pending	NFLX	2023-03-15 19:21:12	robert	24315.00
 	partial_fill	WLY	2023-03-15 19:20:35	admin	3873.00
 	pending	WLY	2023-03-15 19:51:06	james	3873.00
-	filled	AAPL	2023-03-15 19:23:22	robert	3519.00
-	filled	A	2023-03-15 19:21:31	alice	1298.90
-	filled	TLT	2023-03-15 19:25:29	james	989.30
 */
 
 
