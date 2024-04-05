@@ -12,10 +12,10 @@ USE orderbook_activity_db;
 
 -- #1: Display the dateJoined and username for admin users.
 -- David
-SELECT `User`.uname Username, `User`.dateJoined DateJoined FROM User
+SELECT `User`.dateJoined DateJoined, `User`.uname Username FROM User
 JOIN UserRoles ON UserRoles.userid = `User`.userid
-JOIN Role ON Role.roleid = UserRoles.roleid
-WHERE Role.name = "admin";
+JOIN `Role` ON Role.roleid = UserRoles.roleid
+WHERE `Role`.`name` = "admin";
 /*
 admin	2023-02-14 13:13:28
 wiley	2023-04-01 13:13:28
@@ -45,6 +45,21 @@ ROWS=3
 -- Also include the username, role, absolute net amount of shares filled, and absolute net order.
 -- Sort by the absolute net order with the largest value at the top.
 -- David
+SELECT `Order`.orderid OrderID, `Order`.symbol Symbol, `Order`.`status` OrderStatus, `Order`.shares OrderShares, Fill.`share` FilledShares, 
+		Fill.price FillPrice, `User`.userid Username, Role.`name` RoleType, ABS(Fill.`share` * Fill.price) AbsoluteFilledShares, ABS(`Order`.shares * `Order`.price) AbsoluteNetOrder FROM `Order`
+JOIN Fill ON Fill.orderid = `Order`.orderid
+JOIN `User` ON `User`.userid = `Order`.orderid
+JOIN UserRoles ON UserRoles.userid = `User`.userid
+JOIN `Role` ON `Role`.roleid = UserRoles.roleid
+ORDER BY AbsoluteNetOrder DESC;
+/*
+6	GS	canceled_partial_fill	100		-10	305.63	6	user	3056.30	30563.00
+1	WLY	partial_fill			100		-10	38.73	1	admin	387.30	3873.00
+7	GS	filled					-10		10	305.63	7	user	3056.30	3056.30
+5	A	filled					-10		10	129.89	5	admin	1298.90	1298.90
+4	A	filled					10		-10	129.89	4	user	1298.90	1298.90
+ROWS=6
+*/
 
 
 -- #6: Display the username and user role for users who have not placed an order.
