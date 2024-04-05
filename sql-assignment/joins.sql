@@ -95,8 +95,7 @@ GROUP BY
     O.orderid, F.fillid
 HAVING
     SUM(F.share) < O.shares;
--- Sanjana 
-# username, orderid, symbol, fillid, filled_shares, total_shares, outstanding_shares_left
+-- username, orderid, symbol, fillid, filled_shares, total_shares, outstanding_shares_left
 -- 'admin', '1', 'WLY', '1', '-10', '100', '90'
 -- 'admin', '6', 'GS', '5', '-10', '100', '90'
 -- 'alice', '4', 'A', '3', '-10', '10', '0'
@@ -104,6 +103,7 @@ HAVING
 -- 'james', '15', 'TLT', '13', '-10', '10', '0'
 -- 'robert', '8', 'AAPL', '7', '-10', '25', '15'
 -- 'robert', '8', 'AAPL', '9', '-15', '25', '10'
+-- 7 rows
 
 
 -- #5: Display the orderid, symbol, status, order shares, filled shares, and price for orders with fills.
@@ -204,9 +204,8 @@ WHERE
 ORDER BY 
     O.symbol, U.uname;
 
-# symbol, username, role, filled_shares
- -- 'WLY', 'admin', 'admin', '-10'
+-- symbol, username, role, filled_shares
+-- 'WLY', 'admin', 'admin', '-10'
 -- 'WLY', 'james', 'user', '0'
 -- 'WLY', 'robert', 'user', '10'
-
--- Sanjana 
+-- 3 rows
