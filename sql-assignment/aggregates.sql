@@ -1,5 +1,6 @@
 -- Your name and cohort here
 -- C388 Team 02 (Sanjana, Tatiana, David, Morphy)
+
 /*
 Aggregate Queries
 
@@ -11,6 +12,10 @@ USE orderbook_activity_db;
 
 -- #1: How many users do we have?
 -- Sanjana
+=======
+SELECT COUNT(userid) AS num_users
+FROM User;
+-- Returned Rows: 7
 
 
 -- #2: List the username, userid, and number of orders each user has placed.
@@ -59,6 +64,19 @@ ORDER BY o.symbol ASC;
 -- Round the result to the nearest hundredth and use an alias (averageTradePrice).
 -- Sort the results by averageTradePrice with the largest value at the top.
 -- Sanjana
+SELECT u.uname AS username,
+       ROUND(AVG(ABS(o.shares * o.price)), 2) AS averageTradePrice
+FROM `Order` o
+JOIN `User` u ON o.userid = u.userid
+GROUP BY u.userid, u.uname
+ORDER BY averageTradePrice DESC;
+-- # username, averageTradePrice
+-- 'admin', '12182.47'
+-- 'alice', '6280.26'
+-- 'james', '2053.73'
+-- 'kendra', '17109.53'
+-- 'robert', '10417.84'
+-- Results: 7
 
 
 -- #6: How many shares for each symbol does each user have?
@@ -105,3 +123,29 @@ ORDER BY NETFILL DESC;
 -- Display the absolute amount filled, absolute amount ordered, and net outstanding.
 -- Sort the results by the net outstanding amount with the largest value at the top.
 -- Sanjana
+SELECT 
+    u.uname AS username,
+    SUM(ABS(f.share * f.price)) AS absolute_filled_amount,
+    SUM(ABS(o.shares * o.price)) AS absolute_ordered_amount,
+    SUM(ABS(o.shares * o.price)) - SUM(ABS(f.share * f.price)) AS net_outstanding
+FROM 
+    `Fill` f
+JOIN 
+    `Order` o ON f.orderid = o.orderid
+JOIN 
+    `User` u ON o.userid = u.userid
+GROUP BY 
+    u.userid, u.uname
+ORDER BY 
+    net_outstanding DESC
+LIMIT 5;
+-- Results: 8
+
+
+# username, absolute_filled_amount, absolute_ordered_amount, net_outstanding
+-- 'admin', '5555.00', '36547.40', '30992.40'
+-- 'alice', '29717.95', '38861.20', '9143.25'
+-- 'robert', '3906.30', '7425.30', '3519.00'
+-- 'james', '2288.20', '2288.20', '0.00'
+-- 'kendra', '31893.65', '31893.65', '0.00'
+-- Results: 8

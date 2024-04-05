@@ -61,6 +61,33 @@ GROUP BY o.orderid;
 -- #4: Display all partial_fill orders and how many outstanding shares are left.
 -- Also include the username, symbol, and orderid.
 -- Sanjana
+SELECT 
+    U.uname AS username,
+    O.orderid,
+    O.symbol,
+    F.fillid,
+    F.share AS filled_shares,
+    O.shares AS total_shares,
+    (O.shares - SUM(F.share)) AS outstanding_shares_left
+FROM 
+    `Order` O
+INNER JOIN 
+    `Fill` F ON O.orderid = F.orderid
+INNER JOIN 
+    `User` U ON O.userid = U.userid
+GROUP BY 
+    O.orderid, F.fillid
+HAVING
+    SUM(F.share) < O.shares;
+-- Sanjana 
+# username, orderid, symbol, fillid, filled_shares, total_shares, outstanding_shares_left
+-- 'admin', '1', 'WLY', '1', '-10', '100', '110'
+-- 'admin', '6', 'GS', '5', '-10', '100', '110'
+-- 'alice', '4', 'A', '3', '-10', '10', '20'
+-- 'alice', '11', 'SPY', '11', '-75', '100', '175'
+-- 'james', '15', 'TLT', '13', '-10', '10', '20'
+-- 'robert', '8', 'AAPL', '7', '-10', '25', '35'
+-- 'robert', '8', 'AAPL', '9', '-15', '25', '40'
 
 
 -- #5: Display the orderid, symbol, status, order shares, filled shares, and price for orders with fills.
@@ -121,6 +148,36 @@ WHERE o.status = 'pending' OR o.status ="canceled_partial_fill";
 -- Include all orders, even if the order has no fills.
 -- Sanjana
 
+SELECT 
+    O.symbol,
+    U.uname AS username,
+    R.name AS role,
+    COALESCE(F.total_filled_shares, 0) AS filled_shares
+FROM 
+    `Order` O
+JOIN 
+    `User` U ON O.userid = U.userid
+JOIN 
+    `UserRoles` UR ON U.userid = UR.userid
+JOIN 
+    `Role` R ON UR.roleid = R.roleid
+LEFT JOIN (
+    SELECT 
+        orderid,
+        SUM(share) AS total_filled_shares
+    FROM 
+        `Fill`
+    GROUP BY 
+        orderid
+) F ON O.orderid = F.orderid
+WHERE 
+    O.symbol = 'WLY'
+ORDER BY 
+    O.symbol, U.uname;
 
+# symbol, username, role, filled_shares
+ -- 'WLY', 'admin', 'admin', '-10'
+-- 'WLY', 'james', 'user', '0'
+-- 'WLY', 'robert', 'user', '10'
 
-
+-- Sanjana 

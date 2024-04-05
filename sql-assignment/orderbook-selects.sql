@@ -42,7 +42,13 @@ Where dateJoined BETWEEN '2023-03-01' AND '2023-03-31';
 
 
 -- #4: List the different role names a user can have.
--- Sanjana
+--Sanjana
+SELECT DISTINCT R.name AS role_name
+FROM UserRoles UR
+JOIN Role R ON UR.roleid = R.roleid;
+-- # role_name
+-- 'admin'
+-- 'user'
 
 
 -- #5: List all the orders.
@@ -56,7 +62,6 @@ SELECT * FROM `Order`;
 5	3	A		2	2023-03-15 19:21:39	-10		129.89	filled
 ROWS=24
 */
-
 
 
 -- #6: List all orders in March where the absolute net order amount is greater than 1000.
@@ -79,6 +84,24 @@ FROM `Order`;
 
 -- #8: List all pending and partial fill orders with oldest orders first.
 -- Sanjana
+SELECT 
+    F.fillid,
+    F.orderid,
+    F.userid,
+    F.share,
+    F.price,
+    F.symbol
+FROM 
+    Fill F
+JOIN 
+    `Order` O ON F.orderid = O.orderid
+WHERE 
+    O.status IN ('pending', 'partial_fill')
+ORDER BY 
+    O.orderTime;
+-- fillid, orderid, userid, share, price, symbol
+-- '11', '11', '5', '-75', '365.73', 'SPY'
+-- '1', '1', '1', '-10', '38.73', 'WLY'
 
 
 -- #9: List the 10 most expensive financial products where the productType is stock.
