@@ -41,6 +41,18 @@ admin	2023-02-14 13:13:28
 -- #3: List all usernames and dateJoined for users who joined in March 2023.
 -- Tantiana
 
+USE orderbook_activity_db;
+SELECT uname, dateJoined
+FROM User
+Where dateJoined BETWEEN '2023-03-01' AND '2023-03-31';
+/*  5 rows
+'james','2023-03-15 19:15:48'
+'kendra','2023-03-15 19:16:06'
+'alice','2023-03-15 19:16:21'
+'robert','2023-03-15 19:16:43'
+'sam','2023-03-15 19:16:59'
+*/
+
 
 -- #4: List the different role names a user can have.
 -- Sanjana
