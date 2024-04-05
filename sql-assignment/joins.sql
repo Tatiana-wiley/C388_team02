@@ -84,7 +84,7 @@ SELECT
     F.fillid,
     F.share AS filled_shares,
     O.shares AS total_shares,
-    (O.shares - SUM(F.share)) AS outstanding_shares_left
+    (O.shares - ABS(F.share)) AS outstanding_shares_left
 FROM 
     `Order` O
 INNER JOIN 
@@ -97,13 +97,13 @@ HAVING
     SUM(F.share) < O.shares;
 -- Sanjana 
 # username, orderid, symbol, fillid, filled_shares, total_shares, outstanding_shares_left
--- 'admin', '1', 'WLY', '1', '-10', '100', '110'
--- 'admin', '6', 'GS', '5', '-10', '100', '110'
--- 'alice', '4', 'A', '3', '-10', '10', '20'
--- 'alice', '11', 'SPY', '11', '-75', '100', '175'
--- 'james', '15', 'TLT', '13', '-10', '10', '20'
--- 'robert', '8', 'AAPL', '7', '-10', '25', '35'
--- 'robert', '8', 'AAPL', '9', '-15', '25', '40'
+-- 'admin', '1', 'WLY', '1', '-10', '100', '90'
+-- 'admin', '6', 'GS', '5', '-10', '100', '90'
+-- 'alice', '4', 'A', '3', '-10', '10', '0'
+-- 'alice', '11', 'SPY', '11', '-75', '100', '25'
+-- 'james', '15', 'TLT', '13', '-10', '10', '0'
+-- 'robert', '8', 'AAPL', '7', '-10', '25', '15'
+-- 'robert', '8', 'AAPL', '9', '-15', '25', '10'
 
 
 -- #5: Display the orderid, symbol, status, order shares, filled shares, and price for orders with fills.
