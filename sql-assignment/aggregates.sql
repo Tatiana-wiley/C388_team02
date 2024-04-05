@@ -26,7 +26,7 @@ join `Order` as ord on u.userid = ord.userid
 Group by u.uname, ord.symbol
 Order by ord.symbol asc;
 
-/*
+/* question 3 result
 	alice	A	5
 	james	A	1
 	robert	AAA	1
@@ -61,7 +61,7 @@ join `User` as u on ord.userid = u.userid
 Group by ord.symbol
 having orders_placed_for_each_symbol >= 3;
 
-/*
+/* question 7 result
 3	WLY
 3	AAPL
 6	A
