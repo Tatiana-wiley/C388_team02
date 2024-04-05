@@ -64,15 +64,18 @@ Morphy
 -- Do not include the WLY symbol in the results.
 -- Sort the results by highest net with the largest value at the top.
 -- Tatiana
-SELECT o.symbol, SUM(ABS(f.share)) AS NETFILL
-FROM `Order` o
-RIGHT OUTER JOIN Fill f ON f.orderid = o.orderid
-WHERE o.symbol != 'WLY' 
-GROUP BY o.symbol
-HAVING SUM(ABS(f.share)) > 100
+SELECT f.symbol, SUM(ABS(f.share) * f.price) AS NETFILL
+FROM  Fill f
+WHERE f.symbol != 'WLY'
+GROUP BY f.symbol
+HAVING SUM(ABS(f.share) * f.price) > 100
 ORDER BY NETFILL DESC;
-/* 1 ROW
-'SPY','150'
+/* 5 ROWS
+'SPY','54859.50'
+'AAPL','7038.00'
+'GS','6112.60'
+'A','2597.80'
+'TLT','1978.60'
 */
 
 
