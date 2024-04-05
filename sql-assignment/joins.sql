@@ -24,22 +24,26 @@ USE orderbook_activity_db;
 -- #3: Display the orderid, symbol, status, order shares, filled shares, and price for orders with fills.
 -- Note that filledShares are the opposite sign (+-) because they subtract from ordershares!
 -- Tatiana
-SELECT o.orderid, o.symbol, o.status, SUM(o.shares),COUNT(o.status='filled') AS Filled, o.price
+SELECT o.orderid, o.symbol, o.status, SUM(o.shares),SUM(ABS(f.share)) AS Filled, o.price
 FROM `Order` o
-JOIN Fill f ON f.orderid = o.orderid
-WHERE o.status = 'filled'
+RIGHT OUTER JOIN Fill f ON f.orderid = o.orderid
+WHERE o.status != 'canceled_partial_fill'
 GROUP BY o.orderid;
-/* 10 rows
-'2','WLY','filled','-10','1','38.73'
-'4','A','filled','10','1','129.89'
-'5','A','filled','-10','1','129.89'
-'7','GS','filled','-10','1','305.63'
-'8','AAPL','filled','50','2','140.76'
-'9','AAPL','filled','-10','1','140.76'
-'10','AAPL','filled','-15','1','140.76'
-'14','SPY','filled','-75','1','365.73'
-'15','TLT','filled','10','1','98.93'
-'16','TLT','filled','-10','1','98.93'
+
+/* 12 rows
+'1','WLY','partial_fill','100','10','38.73'
+'2','WLY','filled','-10','10','38.73'
+'4','A','filled','10','10','129.89'
+'5','A','filled','-10','10','129.89'
+'7','GS','filled','-10','10','305.63'
+'8','AAPL','filled','50','25','140.76'
+'9','AAPL','filled','-10','10','140.76'
+'10','AAPL','filled','-15','15','140.76'
+'11','SPY','partial_fill','100','75','365.73'
+'14','SPY','filled','-75','75','365.73'
+'15','TLT','filled','10','10','98.93'
+'16','TLT','filled','-10','10','98.93'
+
 
 */
 
@@ -66,7 +70,7 @@ FROM `Order` o
 JOIN User u ON u.userid = o.userid
 JOIN UserRoles ur ON ur.userid = u.userid
 JOIN Role r ON r.roleid = ur.roleid
-WHERE o.status != 'filled';
+WHERE o.status = 'pending' OR o.status ="canceled_partial_fill";
 
 /* 14 rows
 
