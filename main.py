@@ -1,3 +1,4 @@
+pip install FastAPI
 from fastapi import FastAPI, HTTPException
 import requests
 
@@ -39,17 +40,26 @@ async def convert_amount(from_currency: str, to_currency: str, amount: float) ->
         "converted_amount": converted_amount,
     }
   
-# @CODE : AN ENDPOINT THAT TAKES A STRING AND CONFIRMS IT HAS
-# AT LEAST ONE UPPERCASE LETTER, ONE LOWERCASE LETTER, ONE NUMBER, AND IS 8 OR MORE CHARACTERS
-# Make sure the return type matches the function signature, FastAPI enforces that it does!
-#@app.get("/check_password_strength")
-#async def check_password_strength(password: str) -> bool:
-#    """
-#    Coded By: <name>  
-#    This function checks whether a given password is strong enough, i.e., it contains at least one digit, 
-#    one lowercase letter, one uppercase letter, and is 8 characters long.
-#    """
+#Sanjana 
+async def check_password_strength(password: str) -> bool:
+  """
+    Checks whether a given password is strong enough.
 
+    Parameters:
+    - password (str): The password to be checked.
+
+    Returns:
+    - bool: True if the password is strong enough, False otherwise.
+    """
+    has_uppercase = any(char.isupper() for char in password)
+    has_lowercase = any(char.islower() for char in password)
+    has_digit = any(char.isdigit() for char in password)
+    is_long_enough = len(password) >= 8
+
+    if has_uppercase and has_lowercase and has_digit and is_long_enough:
+        return True
+    else:
+        return False
 
 # @CODE : ADD ENDPOINT TO LIST ALL AVAILABLE CURRENCIES  
 # NOTE : FastAPI enforces that the return type of the function matches the function signature!  
